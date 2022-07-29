@@ -1,9 +1,16 @@
 use rocket::{get,launch,routes,Rocket,Build};
 
+use rocket::serde::{Serialize, json::Json};
+
+#[derive(Serialize)]
+#[serde(crate = "rocket::serde")]
+struct Message { 
+    text: String
+}
 
 #[get("/")]
-fn index() -> &'static str {
-    "Hello World"
+fn index() -> Json<Message> {
+    Json(Message { text: "Hello World".to_string() })
 }
 
 #[launch]
